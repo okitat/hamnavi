@@ -1,0 +1,75 @@
+<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta name="viewport" content="user-scalable=no">
+<title>hamNAVI</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="./css/style.css"  />
+<script type="text/javascript" src="./js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="./js/js.cookie.js"></script>
+<script type="text/javascript" src="./js/map.js"></script>
+<link rel="shortcut icon" href="./favicon.ico" />
+<script>
+$('<img src="./img/marker.png">');
+$('<img src="./img/color1_off.png">');
+$('<img src="./img/color1_on.png">');
+$('<img src="./img/color2_off.png">');
+$('<img src="./img/color2_on.png">');
+$('<img src="./img/color3_off.png">');
+$('<img src="./img/color3_on.png">');
+$('<img src="./img/color5_off.png">');
+$('<img src="./img/color5_on.png">');
+</script>
+</head>
+<body>
+<div id="map"></div>
+<div id="arrow">
+	<p id="arrow_start" class="arrow"><img src="./img/arrow_off.png" /></p>
+	<p id="arrow_stop" class="arrow"><img src="./img/arrow_on.png" /></p>
+</div>
+<div id="menu"><img src="./img/menu.png" /></div>
+<div id="logo"><img src="./img/logo.png" /></div>
+<div id="menu_area">
+	<div id="setting_wrap">
+		<div id="setting_main">
+
+<div id="s_op" class="s_menu">
+<table class="s_tbl">
+<td class="s_tbl_label"><p class="s_label">Opacity</p></td>
+<td class="s_tbl_op">
+<button type="button" id="op0" class="change_op"> 0 </button>
+<button type="button" id="op25" class="change_op">25</button>
+<button type="button" id="op50" class="change_op">50</button>
+<button type="button" id="op75" class="change_op">75</button>
+<button type="button" id="op100" class="change_op">100</button>
+</td>
+<td align="right">
+<div id="menu_close"><button type="button">Close</button></div>
+</td>
+</table>
+</div>
+
+<div id="s_color" class="s_menu">
+<table class="s_tbl">
+<td class="s_tbl_label"><p class="s_label">Color</p></td>
+<td>
+<button type="button" id="color1" class="change_color"></button>
+<button type="button" id="color2" class="change_color"></button>
+<button type="button" id="color3" class="change_color"></button>
+<button type="button" id="color5" class="change_color"></button>
+</td>
+<td align="right">
+<div id="menu_about"><button type="button" onclick="window.open('./about.html')">About</button></div>
+</td>
+</table>
+</div>
+
+		</div>
+	</div>
+</div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOwpBPm9DHP0YTDF1GuakIfYKUesIplHY&callback=initMap"></script>
+</body>
+</html>
