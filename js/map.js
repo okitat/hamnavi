@@ -135,12 +135,12 @@ function setHeatMap(disp_mode, disp_color,disp_opacity){
 	// キャッシュ対策
 	//var date = new Date();
 	//var unixTimestamp = date.getTime();
-	var unixTimestamp = "";
 
 	// ヒートマップ画像呼び出し設定
 	HMMapType = new google.maps.ImageMapType({
 		getTileUrl: function(coord, zoom) {
-			return base_url+disp_mode+"/"+disp_color+"/"+zoom+"/"+coord.x+"/"+coord.y+".png?"+unixTimestamp;
+			//return base_url+disp_mode+"/"+disp_color+"/"+zoom+"/"+coord.x+"/"+coord.y+".png?"+unixTimestamp;
+			return base_url+disp_mode+"/"+disp_color+"/"+zoom+"/"+coord.x+"/"+coord.y+".png";
 		},
 		tileSize: new google.maps.Size(256, 256),
 		maxZoom: 17,
