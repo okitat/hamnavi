@@ -1,6 +1,9 @@
 var map;
+var latlng;
 var markersArray = [];
+var flagsArray = [];
 var watchid;
+var currentInfoWindow = null;
 var Potition_latitude;
 var Potition_longitude;
 //var Potition_altitude;
@@ -30,9 +33,7 @@ $(function(){
 
 	// 位置取得停止ボタン処理
 	$('#arrow_stop').on('click',function(){
-		stopNowLocation();
-	  $('#arrow_stop').css({'display':'none'});
-	  $('#arrow_start').css({'display':'inline-block'});
+		LocationStop();
 	});
 
 	// menuボタン処理
@@ -74,6 +75,13 @@ $(function(){
 //		setHeatMap(selectMode,disp_color,disp_opacity);
 //		dispHeatMap("reset");
 //	});
+
+	$('#pac-input').keyup(function() {
+			if(document.getElementById("pac-input").value != ""){
+				$('#search-reset-btn').css({'display':'inline-block'});
+			}
+
+	});
 
 });
 
@@ -128,6 +136,98 @@ function initMap() {
 	//// Listener ////
 	// 拡大率制御
 	map.addListener('zoom_changed', limitZoom);
+
+	//// Search Box ////
+  // Create the search box and link it to the UI element.
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
+
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old flags.
+    flagsArray.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    flagsArray = [];
+
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      if (!place.geometry) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+      var icon = {
+        url: "./img/flag.png",
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(50, 100),
+        scaledSize: new google.maps.Size(150, 150)
+      };
+
+      // Create a marker for each place.
+			// フラッグ設定
+			var flag_marker = new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+				clickable: true,
+				animation: google.maps.Animation.DROP,
+        position: place.geometry.location
+      });
+			// クリック時リスナー設定
+			//google.maps.event.addListener(flag_marker, 'click', FlagClickEventFunc);
+	    google.maps.event.addListener(flag_marker, 'click', function(flag_marker){
+				// 情報ウインドウ表示
+				var infowindow = new google.maps.InfoWindow({
+					content: '<span class="info_win">'+this.title+'</span>'
+				});
+				// open中のウインドウをclose
+				if (currentInfoWindow) {
+					currentInfoWindow.close();
+				}
+				// ウインドウをopen
+				infowindow.open(map, this);
+				currentInfoWindow = infowindow;
+			});
+
+			// フラッグを配列にセット
+      flagsArray.push(flag_marker);
+
+//      if (place.geometry.viewport) {
+//        // Only geocodes have viewport.
+//        bounds.union(place.geometry.viewport);
+//      } else {
+        bounds.extend(place.geometry.location);
+        bounds.extend(latlng); // ADD
+//      }
+    });
+    map.fitBounds(bounds);
+		// 現在位置取得非活性
+		LocationStop();
+
+  });
+
+}
+
+
+// 現在位置取得非活性
+function LocationStop(){
+	stopNowLocation();
+  $('#arrow_stop').css({'display':'none'});
+  $('#arrow_start').css({'display':'inline-block'});
 }
 
 // HeatMap設定セット
@@ -176,11 +276,49 @@ function clearMarkersArray(){
 	}
 }
 
+// 目的地フラッグの配列を空にする
+function clearFlagsArray(){
+	if (flagsArray) {
+		for (i in flagsArray) {
+			flagsArray[i].setMap(null);
+		}
+			flagsArray.length = 0;
+	}
+}
+
 // 現在位置取得の停止
 function stopNowLocation(){
+
 	if (navigator.geolocation) {
 		navigator.geolocation.clearWatch( watchid ); // 位置取得停止
 		clearMarkersArray(); // マーカーを削除
+
+		// 非活性表示マーカーを配置
+		// マーカー設定
+		var markerImage = {
+			url: "./img/marker_die.png",
+			scaledSize: new google.maps.Size(100, 100),
+		}
+		var markerOptions = {
+			position: latlng,
+			icon: markerImage,
+			optimized: false,
+			clickable: false,
+			draggable: false,
+		};
+		// マーカーの配列を空にする
+		clearMarkersArray();
+		// マーカーを配列に格納する
+		var marker = new google.maps.Marker(markerOptions);
+		markersArray.push(marker);
+
+		// マーカーの配列を表示する
+		if (markersArray) {
+			for (i in markersArray) {
+				markersArray[i].setMap(map);
+			}
+		}
+
 	}
 }
 
@@ -213,14 +351,17 @@ function successCallback(pos) {
 	if(Potition_latitude && Potition_longitude){
 		//console.log(Potition_latitude+" "+Potition_longitude);
 		// set now location
-		var latlng = new google.maps.LatLng(Potition_latitude, Potition_longitude);
+		latlng = new google.maps.LatLng(Potition_latitude, Potition_longitude);
 		map.setCenter(latlng);
 
 		// マーカー設定
+		var markerImage = {
+			url: "./img/marker.png",
+			scaledSize: new google.maps.Size(100, 100),
+		}
 		var markerOptions = {
 			position: latlng,
-			icon: "./img/marker.png",
-			scaledSize : new google.maps.Size(100,100),
+			icon: markerImage,
 			optimized: false,
 			clickable: false,
 			draggable: false,
@@ -260,4 +401,14 @@ function successCallback(pos) {
 function errorCallback(err) {
     alert("位置情報が取得できませんでした");
 };
+
+// 検索BOXクリアボタン押下
+function ClearButton_Click(){
+	// 入力欄クリア
+	document.getElementById("pac-input").value = "";
+  $('#search-reset-btn').css({'display':'none'});
+	// 目的地フラッグ除去
+	clearFlagsArray();
+
+}
 

@@ -4,7 +4,7 @@
 html,td{
 	font-size: 5vh;
 	font-family: "メイリオ", sans-serif;
-  color: #EEEEEE;
+  color: #EEE;
 }
 html,body { height: 100%; margin: 0; padding: 0; }
 p{
@@ -194,7 +194,7 @@ a{
 #about{
 	font-size: 3.4vw;
 	font-family: "メイリオ", sans-serif;
-  color: #EEEEEE;
+  color: #EEE;
 }
 #about h2{
 	font-size: 1.2em;
@@ -215,9 +215,9 @@ a{
 }
 #about hr{
 	height: 1px;
-	background-color: #555555;
+	background-color: #555;
 	border: none;
-	color: #555555;
+	color: #555;
 }
 .about_icon_img{
 	width: 1.5em;
@@ -251,3 +251,92 @@ a{
 		font-size: 0.75em;
 }
 
+/* 検索BOX関連 */
+#searchbox {
+  position: absolute;
+  z-index: 100;
+	width: 100%;
+}
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 90px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+	font-size: 5vw;
+	font-family: "メイリオ", sans-serif;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 80%;
+}
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+#search-reset-btn{
+  z-index: 110;
+	position: absolute;
+	font-size: 7vw;
+	font-family: "メイリオ", sans-serif;
+  color: #000;
+  font-weight: 300;
+	margin-top: 10px;
+	margin-left: 75%;
+	text-align: right;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+  height: 90px;
+	display: none;
+}
+.pac-container {
+	font-family: "メイリオ", sans-serif;
+}
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+#type-selector label {
+	font-family: "メイリオ", sans-serif;
+	font-size: 5vw;
+  font-weight: 300;
+}
+#target {
+  width: 80%;
+}
+.pac-icon {
+  display: none;
+}
+.pac-item {
+  height: 6vh;
+	font-size: 5vw;
+	font-family: "メイリオ", sans-serif;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+}
+.pac-item-query{
+	font-size: 5vw;
+	font-family: "メイリオ", sans-serif;
+}
+.pac-matched {
+	font-size: 5vw;
+	font-family: "メイリオ", sans-serif;
+}
+
+.info_win {
+	font-family: "メイリオ", sans-serif;
+	font-size: 4vw;
+  color: #000;
+}
