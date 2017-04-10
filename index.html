@@ -1,19 +1,26 @@
-<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Cache-Control" content="no-cache">
+<meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=no">
-<title>hamNAVI</title>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<meta name="description" content="本サービスはGoogle MapにStrava のアクティビティ積算ルート表示を追加した、ルート探索ツールです。" />
+<meta name="description" content="本サービスはGoogle MapにStrava のアクティビティ積算ルート表示を追加した、ルート探索サービスです。" />
 <meta name="keywords" content="hamNAVI,Strava,ヒートマップ,ルート,サイクリング,ランニング,global,heatmap" />
+<title>hamNAVI</title>
+<meta http-equiv="Content-Language" content="ja">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta property="og:title" content="hamNAVI" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://okitat.com/hamnavi/index.html" />
+<meta property="og:image" content="https://okitat.com/hamnavi/img/hamnavi_og.jpg" />
+<meta property="og:site_name" content="hamNAVI" />
+<meta property="og:description" content="本サービスはGoogle MapにStrava のアクティビティ積算ルート表示を追加した、ルート探索サービスです。" />
 <link rel="stylesheet" type="text/css" href="./css/style.css"  />
 <script type="text/javascript" src="./js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="./js/js.cookie.js"></script>
 <script type="text/javascript" src="./js/map.js"></script>
-<link rel="shortcut icon" href="./favicon.ico" />
-<script>
+<link rel="shortcut icon" href="/hamnavi/favicon.ico" />
+<script type="text/javascript">
 var isAndroidBrowser = false
 var ua = window.navigator.userAgent
 if (/Android/.test(ua) && /Linux; U;/.test(ua) && !/Chrome/.test(ua)) {
@@ -23,7 +30,7 @@ if(isAndroidBrowser){
 	alert("本サービスは、現在お使いのAndroid標準ブラウザに対応しておりません。\n恐れ入りますが、対応ブラウザのChromeにてご利用いただければと思います。");
 }
 </script>
-<script>
+<script type="text/javascript">
 $('<img src="./img/marker.png">');
 $('<img src="./img/color1_off.png">');
 $('<img src="./img/color1_on.png">');
